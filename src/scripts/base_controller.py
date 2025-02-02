@@ -5,7 +5,6 @@
 
 import rospy
 import math
-from DCMotor import DCMotor as DCM
 from std_msgs.msg import Float64
 from std_msgs.msg import Bool
 from geometry_msgs.msg import Twist
