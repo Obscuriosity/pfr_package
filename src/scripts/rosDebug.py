@@ -2,8 +2,11 @@
 #
 # Author - Tony Willett
 # Date - 20 06 2022
-# Description - Diagnostic tool for ClubBot2
+# Description - Diagnostic tool for Person Following Robot
 # Monitor published hardware nodes and display in GUI
+# - Front and Back Bumpers
+# - Four front Sonar
+# - Left and Right Wheel Encoders
 #
 # refer to http://tkdocs.com/tutorial/firstexample.html
 #
@@ -18,12 +21,12 @@ from sensor_msgs.msg import Range
 
 
 class debugGUI:
-    """Diagnostic GUI for ClubBot2 functions.
+    """Diagnostic GUI for Diff Drive Robot functions.
     """
 
     def __init__(self, gui):
 
-        gui.title("ClubBot II Diagnostics")
+        gui.title("Robot Diagnostics")
         gui.columnconfigure(0, weight=1)
         gui.rowconfigure(0, weight=1)
         gui.geometry("300x450")
@@ -250,7 +253,7 @@ class debugGUI:
 
 def main():
     rospy.init_node("DebugGUI")
-    rospy.loginfo("ClubBot2 Diagnostic GUI Started")
+    rospy.loginfo("Robot Diagnostic GUI Started")
     gui=Tk()
     debugGUI(gui)
     gui.mainloop()
