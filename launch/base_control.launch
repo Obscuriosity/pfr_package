@@ -3,15 +3,8 @@
     <node
         pkg="rosserial_python"
         type="serial_node.py"
-        name="arduino_Encoders"
+        name="microcontroller"
         args="/dev/ttyUSB0"
-    />
-
-    <node
-        pkg="rosserial_python"
-        type="serial_node.py"
-        name="arduino_Sensors"         
-        args="/dev/ttyUSB1"
     />
 
     <remap from="lstate" to="/left_wheel/state"/>
@@ -25,20 +18,20 @@
 
         <node
             name="base_control"
-            pkg="clubbot"
+            pkg="pfr_package"
             type="base_controller.py"
             output="screen"
         />
 
         <node
             name="encoder_publisher"
-            pkg="clubbot"
+            pkg="pfr_package"
             type="encoder_pub.py"
         />
 
         <node
             name="odometry"
-            pkg="clubbot"
+            pkg="pfr_package"
             type="odometry_pub.py"
         />
         
