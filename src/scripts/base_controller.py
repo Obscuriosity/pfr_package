@@ -69,8 +69,6 @@ class baseController:
             rightSetpoint = 0
             self._lPIDenablePub.publish(False)
             self._rPIDenablePub.publish(False)
-            self._leftWheel.stop()
-            self._rightWheel.stop()
         else:
             # Enable PID on both wheels
             self._lPIDenablePub.publish(True)
