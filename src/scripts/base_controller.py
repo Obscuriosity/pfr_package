@@ -25,14 +25,9 @@ class baseController:
 
     def __init__(self):
 
-        self._leftPWM = 0.0
-        self._rightPWM = 0.0
-
         self.speed = 0.0
         self.spin = 0.0
-
-        self._lmotorSub = rospy.Subscriber('lcontrol_effort', Float64, self.lmotorCB)
-        self._rmotorSub = rospy.Subscriber('rcontrol_effort', Float64, self.rmotorCB)
+        
         self._cmd_velSub = rospy.Subscriber('cmd_vel', Twist, self._cmd_vel_CB)
 
         self._lsetpointPub = rospy.Publisher('lsetpoint', Float64, queue_size=10)
@@ -52,16 +47,8 @@ class baseController:
             self._wheel_base = rospy.get_param('/wheel_base')
             self._leftTPR = rospy.get_param('/leftTicksPerRotation')
             self._rightTPR = rospy.get_param('/rightTicksPerRotation')
-            self._lfPin = rospy.get_param('/leftForwardPin')
-            self._lbPin = rospy.get_param('/leftBackwardPin')
-            self._rfPin = rospy.get_param('/rightForwardPin')
-            self._rbPin = rospy.get_param('/rightBackwardPin')
         else:
             rospy.logerror("Robot Parameters not loaded")
-
-        #  Set pin numbers of the differential motor pair:
-        self._leftWheel = DCM(self._lfPin, self._lbPin)
-        self._rightWheel = DCM(self._rfPin, self._rbPin)
 
         rospy.loginfo("Base Controller running")
         # Publish initial setpoints as zero
@@ -72,18 +59,6 @@ class baseController:
         self.speed = msg.linear.x
         self.spin = msg.angular.z
         self._set_motor_speeds()
-
-    def lmotorCB(self, lpwm):
-        self._leftPWM += lpwm.data
-        # print("Left PWM", self._leftPWM)
-        self._leftPWM = max(min(self._leftPWM, 100), -100)
-        self._leftWheel.run(self._leftPWM)
-
-    def rmotorCB(self, rpwm):
-        self._rightPWM += rpwm.data
-        # print("Right PWM", self._rightPWM)
-        self._rightPWM = max(min(self._rightPWM, 100), -100)
-        self._rightWheel.run(self._rightPWM)
 
     def max_speed(self):
         '''Speed in meters per second at maximum RPM'''
