@@ -12,15 +12,9 @@ from geometry_msgs.msg import Twist
 
 
 class baseController:
-    ''' Differential drive node for use with DCMotor script
-
-        Subscribe to encoder readings from Arduino:
-        enc_lf, enc_lb, enc_rf, enc_rb for state readings.
-        Subscribe to control_effort for PID control of motors.
-        Subscribe to /cmd_vel to accept twist messages.
-
-        Publish state readings to PID package.
-        Publish pwm to motors.
+    ''' Differential drive node Subscribes to /cmd_vel to accept twist messages.
+        Calculates set point which is published to PID node.
+        PID node publishes control efforts which are dealt with by the rosserial node.
     '''
 
     def __init__(self):
