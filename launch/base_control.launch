@@ -1,5 +1,5 @@
 <launch>
-    <rosparam file="$(find clubbot)/src/config/RobotParams.yaml" />
+    <rosparam file="$(find pfr_package)/src/config/RobotParams.yaml" />
     <node
         pkg="rosserial_python"
         type="serial_node.py"
