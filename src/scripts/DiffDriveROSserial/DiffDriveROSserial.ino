@@ -56,8 +56,8 @@ ros::Publisher enc_lf_pub("/enc_lf", &enc_lf_msg);
 ros::Publisher enc_lb_pub("/enc_lb", &enc_lb_msg);
 ros::Publisher enc_rf_pub("/enc_rf", &enc_rf_msg);
 ros::Publisher enc_rb_pub("/enc_rb", &enc_rb_msg);
-ros::Subscriber<std_msgs::Float64> l_motor("lcontrol_effort", &l_motorCB);
-ros::Subscriber<std_msgs::Float64> r_motor("rcontrol_effort", &r_motorCB);
+ros::Subscriber<std_msgs::Float64> l_motor("/left_wheel/control_effort", &l_motorCB);
+ros::Subscriber<std_msgs::Float64> r_motor("/right_wheel/control_effort", &r_motorCB);
 
 void setup() {
   nh.initNode();
