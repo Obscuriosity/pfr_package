@@ -71,6 +71,8 @@ void setup() {
   //initialize pins
   attachInterrupt(l_enc_int, countL, RISING);
   attachInterrupt(r_enc_int, countR, RISING);
+  pinMode(l_enc_dig, INPUT);
+  pinMode(r_enc_dig, INPUT);
 
   previousMillis = millis();
   interval = 20;
