@@ -23,6 +23,10 @@ long lpwm, rpwm;
 int motorPWM[2];
 int forPins[2] = { 16, 18 };  // 16 right forward, 18 left forward
 int bacPins[2] = { 17, 19 };  // 17 right backward, 19 right backward
+int l_enc_int = 21;  // left encoder interrupt pin
+int l_enc_dig = 22;  // left encoder digital pin
+int r_enc_int = 25;  // right encoder interrupt pin
+int r_enc_dig = 26;  // right encoder digital pin
 
 unsigned long previousMillis;
 int interval;
@@ -65,8 +69,8 @@ void setup() {
   nh.subscribe(r_motor);
 
   //initialize pins
-  attachInterrupt(0, countL, RISING);
-  attachInterrupt(1, countR, RISING);
+  attachInterrupt(l_enc_int, countL, RISING);
+  attachInterrupt(r_enc_int, countR, RISING);
 
   previousMillis = millis();
   interval = 20;
@@ -109,7 +113,7 @@ void runMotors() {
 }
 
 void countL() {
-  Lenc = digitalRead(7);
+  Lenc = digitalRead(l_enc_dig);
   if (Lenc == HIGH) {
     leftBac++;
   } else {
@@ -118,7 +122,7 @@ void countL() {
 }
 
 void countR() {
-  Renc = digitalRead(12);
+  Renc = digitalRead(r_enc_dig);
   if (Renc == HIGH) {
     rightFor++;
   } else {
