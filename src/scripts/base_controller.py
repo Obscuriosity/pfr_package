@@ -23,8 +23,8 @@ class baseController:
         
         self._cmd_velSub = rospy.Subscriber('cmd_vel', Twist, self._cmd_vel_CB)
 
-        self._lsetpointPub = rospy.Publisher('lsetpoint', Float64, queue_size=10)
-        self._rsetpointPub = rospy.Publisher('rsetpoint', Float64, queue_size=10)
+        self._lsetpointPub = rospy.Publisher('lsetpoint', Float64, queue_size=10, latch=True)
+        self._rsetpointPub = rospy.Publisher('rsetpoint', Float64, queue_size=10, latch=True)
         self._lPIDenablePub = rospy.Publisher('lpid_enable', Bool, queue_size=10)
         self._rPIDenablePub = rospy.Publisher('rpid_enable', Bool, queue_size=10)
 
@@ -45,10 +45,8 @@ class baseController:
 
         rospy.loginfo("Base Controller running")
         # Publish initial setpoints as zero
-        leftSetpoint = 0.0
-        rightSetpoint = 0.0
-        self._lsetpointPub.publish(leftSetpoint)
-        self._rsetpointPub.publish(rightSetpoint)
+        self._lsetpointPub.publish(0.0)
+        self._rsetpointPub.publish(0.0)
 
     def _cmd_vel_CB(self, msg):
         self.speed = msg.linear.x
