@@ -52,12 +52,28 @@ void r_motorCB(const std_msgs::Float64& msg) {
   //nh.loginfo(rbuffer);
 }
 
+void l_setpointCB(const std_msgs::Float64& setpoint) {
+  // monitor setpoint, if it is zero set pwm to zero
+  if (setpoint.data == 0.0) {
+    motorPWM[0] = 0;
+  }
+}
+
+void r_setpointCB(const std_msgs::Float64& setpoint) {
+  // monitor setpoint, if it is zero set pwm to zero
+  if (setpoint.data == 0.0) {
+    motorPWM[1] = 0;
+  }
+}
+
 ros::Publisher enc_lf_pub("/enc_lf", &enc_lf_msg);
 ros::Publisher enc_lb_pub("/enc_lb", &enc_lb_msg);
 ros::Publisher enc_rf_pub("/enc_rf", &enc_rf_msg);
 ros::Publisher enc_rb_pub("/enc_rb", &enc_rb_msg);
 ros::Subscriber<std_msgs::Float64> l_motor("/left_wheel/control_effort", &l_motorCB);
 ros::Subscriber<std_msgs::Float64> r_motor("/right_wheel/control_effort", &r_motorCB);
+ros::Subscriber<std_msgs::Float64> l_setpoint("/left_wheel/setpoint", &l_setpointCB);
+ros::Subscriber<std_msgs::Float64> r_setpoint("/right_wheel/setpoint", &r_setpointCB);
 
 void setup() {
   nh.initNode();
@@ -67,6 +83,8 @@ void setup() {
   nh.advertise(enc_rb_pub);
   nh.subscribe(l_motor);
   nh.subscribe(r_motor);
+  nh.subscribe(l_setpoint);
+  nh.subscribe(r_setpoint);
 
   //initialize pins
   attachInterrupt(l_enc_int, countL, RISING);
@@ -99,6 +117,7 @@ void loop() {
     nh.spinOnce();
   }
 }
+
 void runMotors() {
   for (int i = 0; i < 2; i++) {
     if (motorPWM[i] > 0) {
