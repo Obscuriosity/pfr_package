@@ -1,5 +1,6 @@
+DILYN, A Person Following Robot.
+
 pfr_package contains the ROS package for my Dissertation project.
-A Person Following Robot.
 
 Differential drive robot base.
 Jetson Nano SBC.
