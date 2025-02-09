@@ -19,12 +19,12 @@
 #include <sensor_msgs/Range.h>
 #include <stdlib.h>
 
-#define bpr_lf_pin 3
-#define bpr_mf_pin 4
-#define bpr_rf_pin 5
-#define bpr_lb_pin 6
-#define bpr_mb_pin 7
-#define bpr_rb_pin 8
+#define bpr_lf_pin 13
+#define bpr_mf_pin 14
+#define bpr_rf_pin 15
+#define bpr_lb_pin 27
+#define bpr_mb_pin 33
+#define bpr_rb_pin 32
 #define SONAR_NUM 4          //The number of sensors. 
 #define MAX_DISTANCE 50
 
@@ -66,10 +66,10 @@ volatile unsigned long rightFor, rightBac;
 bool Lenc, Renc;
 
 NewPing sonar[SONAR_NUM] = {   // Sensor object array.
-  NewPing(9, 9, MAX_DISTANCE),
-  NewPing(10, 10, MAX_DISTANCE),
-  NewPing(11, 11, MAX_DISTANCE),
-  NewPing(12, 12, MAX_DISTANCE)
+  NewPing(36, 36, MAX_DISTANCE),
+  NewPing(39, 39, MAX_DISTANCE),
+  NewPing(34, 34, MAX_DISTANCE),
+  NewPing(35, 35, MAX_DISTANCE)
 };
 int snrReadings[4]; // list to store readings
 
