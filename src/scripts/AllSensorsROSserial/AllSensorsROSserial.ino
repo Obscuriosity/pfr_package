@@ -78,13 +78,13 @@ ros::NodeHandle nh;
 
 void l_motorCB(const std_msgs::Float64& msg) {
   // Ensure value stays within -255 and 255
-  lpwm = max(min(lpwm, 255), -255);
+  lpwm = max(min(lpwm, 255.0), -255.0);
   motorPWM[0] = int(lpwm);
 }
 
 void r_motorCB(const std_msgs::Float64& msg) {
   // Ensure value stays within -255 and 255
-  rpwm = max(min(rpwm, 255), -255);
+  rpwm = max(min(rpwm, 255.0), -255.0);
   motorPWM[1] = int(rpwm);
   //nh.loginfo("right motor pwm cb = ");
   //itoa(int(rpwm), rbuffer, 10);
