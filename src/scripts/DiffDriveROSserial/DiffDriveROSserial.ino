@@ -38,14 +38,14 @@ bool Lenc, Renc;
 ros::NodeHandle nh;
 
 void l_motorCB(const std_msgs::Float64& msg) {
-  // map message in percent to pwm 0-255
-  lpwm = map(msg.data, -100, 100, -255, 255);
+  // Ensure value does not exceed 255
+  lpwm = max(min(num, 255), -255);
   motorPWM[0] = int(lpwm);
 }
 
 void r_motorCB(const std_msgs::Float64& msg) {
-  // map message in percent to pwm 0-255
-  rpwm = map(msg.data, -100, 100, -255, 255);
+  // Ensure value does not exceed 255
+  rpwm = max(min(num, 255), -255);
   motorPWM[1] = int(rpwm);
   //nh.loginfo("right motor pwm cb = ");
   //itoa(int(rpwm), rbuffer, 10);
