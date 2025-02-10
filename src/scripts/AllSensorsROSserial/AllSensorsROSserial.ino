@@ -50,7 +50,7 @@ sensor_msgs::Range snr_2_msg;
 sensor_msgs::Range snr_3_msg;
 sensor_msgs::Range snr_4_msg;
 
-long lpwm, rpwm;
+double lpwm, rpwm;
 int motorPWM[2];
 int forPins[2] = { 16, 18 };  // 16 right forward, 18 left forward
 int bacPins[2] = { 17, 19 };  // 17 right backward, 19 right backward
