@@ -265,7 +265,7 @@ void loop() {
 void runMotors() {
   for (int i = 0; i < 2; i++) {
     // Ensure value stays within -255 and 255
-    motorPWM[i] = max(min(motorPWM[i], 255.0), -255.0);
+    motorPWM[i] = max(min(motorPWM[i], 255), -255);
     if (motorPWM[i] > 0) {
       analogWrite(forPins[i], motorPWM[i]);
       analogWrite(bacPins[i], 0);
