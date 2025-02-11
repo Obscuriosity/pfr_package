@@ -19,7 +19,8 @@ std_msgs::UInt64 enc_lf_msg;
 std_msgs::UInt64 enc_lb_msg;
 std_msgs::UInt64 enc_rf_msg;
 std_msgs::UInt64 enc_rb_msg;
-double lpwm, rpwm;
+std_msgs::Float64 lpwm, rpwm;
+
 int motorPWM[2];
 int forPins[2] = { 16, 18 };  // 16 right forward, 18 left forward
 int bacPins[2] = { 17, 19 };  // 17 right backward, 19 right backward
