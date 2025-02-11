@@ -19,8 +19,8 @@ std_msgs::UInt64 enc_lf_msg;
 std_msgs::UInt64 enc_lb_msg;
 std_msgs::UInt64 enc_rf_msg;
 std_msgs::UInt64 enc_rb_msg;
-std_msgs::Float64 lpwm, rpwm;
 
+long lpwm, rpwm;
 int motorPWM[2];
 int forPins[2] = { 16, 18 };  // 16 right forward, 18 left forward
 int bacPins[2] = { 17, 19 };  // 17 right backward, 19 right backward
@@ -39,18 +39,13 @@ bool Lenc, Renc;
 ros::NodeHandle nh;
 
 void l_motorCB(const std_msgs::Float64& msg) {
-  // Ensure value does not exceed 255 or go below -255
-  lpwm = max(min(msg.data, 255.0), -255.0);
-  motorPWM[0] = int(lpwm);
+  // Assign msg value to motor array.
+  motorPWM[0] = int(msg.data);
 }
 
 void r_motorCB(const std_msgs::Float64& msg) {
-  // Ensure value does not exceed 255 or go below -255
-  rpwm = max(min(msg.data, 255.0), -255.0);
-  motorPWM[1] = int(rpwm);
-  //nh.loginfo("right motor pwm cb = ");
-  //itoa(int(rpwm), rbuffer, 10);
-  //nh.loginfo(rbuffer);
+  // Assign msg value to motor array.
+  motorPWM[1] = int(msg.data);
 }
 
 void l_setpointCB(const std_msgs::Float64& setpoint) {
@@ -121,6 +116,7 @@ void loop() {
 
 void runMotors() {
   for (int i = 0; i < 2; i++) {
+    motorPWM[i] = max(min(motorPWM[i], 225), -225);
     if (motorPWM[i] > 0) {
       analogWrite(forPins[i], motorPWM[i]);
       analogWrite(bacPins[i], 0);
