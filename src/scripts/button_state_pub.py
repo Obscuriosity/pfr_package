@@ -22,6 +22,8 @@ class buttonStatePublisher:
         self.gre_but_state = False
         self.blu_but_state = False
 
+        self.bounce = 250 # Button debounce time
+
         # Ros Publishers
         self.redButtonPub = rospy.Publisher('redButtonState', Bool, queue_size = 1)
         self.yelButtonPub = rospy.Publisher('yelButtonState', Bool, queue_size = 1)
