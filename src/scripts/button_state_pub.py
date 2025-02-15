@@ -36,12 +36,7 @@ class buttonStatePublisher:
         GPIO.setup(self.yel_but_pin, GPIO.IN)
         GPIO.setup(self.gre_but_pin, GPIO.IN)
         GPIO.setup(self.blu_but_pin, GPIO.IN)
-
-        GPIO.add_event_detect(self.red_but_pin, GPIO.FALLING, callback = redButtonCB, bouncetime = bounce)
-        GPIO.add_event_detect(self.yel_but_pin, GPIO.FALLING, callback = yelButtonCB, bouncetime = bounce)
-        GPIO.add_event_detect(self.gre_but_pin, GPIO.FALLING, callback = greButtonCB, bouncetime = bounce)
-        GPIO.add_event_detect(self.blu_but_pin, GPIO.FALLING, callback = bluButtonCB, bouncetime = bounce)
-
+        
         def redButtonCB(channel):
             self.red_but_state = not self.red_but_state
             self.redButtonPub(self.red_but_state)
@@ -57,6 +52,11 @@ class buttonStatePublisher:
         def bluButtonCB(channel):
             self.blu_led_state = not self.blu_led_state
             self.bluButtonPub(self.blu_led_state)
+
+        GPIO.add_event_detect(self.red_but_pin, GPIO.FALLING, callback = redButtonCB, bouncetime = bounce)
+        GPIO.add_event_detect(self.yel_but_pin, GPIO.FALLING, callback = yelButtonCB, bouncetime = bounce)
+        GPIO.add_event_detect(self.gre_but_pin, GPIO.FALLING, callback = greButtonCB, bouncetime = bounce)
+        GPIO.add_event_detect(self.blu_but_pin, GPIO.FALLING, callback = bluButtonCB, bouncetime = bounce)
 
 
 def main():
