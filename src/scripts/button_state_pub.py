@@ -30,17 +30,17 @@ class buttonStatePublisher:
         self.greButtonPub = rospy.Publisher('greButtonState', Bool, queue_size = 1)
         self.bluButtonPub = rospy.Publisher('bluButtonState', Bool, queue_size = 1)
 
-        self.GPIO.setmode(GPIO.BOARD)
-        self.GPIO.setwarnings(False)
-        self.GPIO.setup(self.red_but_pin, GPIO.IN)
-        self.GPIO.setup(self.yel_but_pin, GPIO.IN)
-        self.GPIO.setup(self.gre_but_pin, GPIO.IN)
-        self.GPIO.setup(self.blu_but_pin, GPIO.IN)
+        GPIO.setmode(GPIO.BOARD)
+        GPIO.setwarnings(False)
+        GPIO.setup(self.red_but_pin, GPIO.IN)
+        GPIO.setup(self.yel_but_pin, GPIO.IN)
+        GPIO.setup(self.gre_but_pin, GPIO.IN)
+        GPIO.setup(self.blu_but_pin, GPIO.IN)
 
-        self.GPIO.add_event_detect(self.red_but_pin, GPIO.FALLING, callback = redButtonCB, bouncetime = bounce)
-        self.GPIO.add_event_detect(self.yel_but_pin, GPIO.FALLING, callback = yelButtonCB, bouncetime = bounce)
-        self.GPIO.add_event_detect(self.gre_but_pin, GPIO.FALLING, callback = greButtonCB, bouncetime = bounce)
-        self.GPIO.add_event_detect(self.blu_but_pin, GPIO.FALLING, callback = bluButtonCB, bouncetime = bounce)
+        GPIO.add_event_detect(self.red_but_pin, GPIO.FALLING, callback = redButtonCB, bouncetime = bounce)
+        GPIO.add_event_detect(self.yel_but_pin, GPIO.FALLING, callback = yelButtonCB, bouncetime = bounce)
+        GPIO.add_event_detect(self.gre_but_pin, GPIO.FALLING, callback = greButtonCB, bouncetime = bounce)
+        GPIO.add_event_detect(self.blu_but_pin, GPIO.FALLING, callback = bluButtonCB, bouncetime = bounce)
 
         def redButtonCB(channel):
             self.red_but_state = not self.red_but_state
