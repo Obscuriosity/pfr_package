@@ -37,19 +37,19 @@ class buttonStatePublisher:
         GPIO.setup(self.gre_but_pin, GPIO.IN)
         GPIO.setup(self.blu_but_pin, GPIO.IN)
 
-        def redButtonCB(channel):
+        def redButtonCB(self, channel):
             self.red_but_state = not self.red_but_state
             self.redButtonPub(self.red_but_state)
 
-        def yelButtonCB(channel):
+        def yelButtonCB(self, channel):
             self.yel_led_state = not self.yel_led_state
             self.yelButtonPub(self.yel_led_state)
 
-        def greButtonCB(channel):
+        def greButtonCB(self, channel):
             self.gre_led_state = not self.gre_led_state
             self.greButtonPub(self.gre_led_state)
 
-        def bluButtonCB(channel):
+        def bluButtonCB(self, channel):
             self.blu_led_state = not self.blu_led_state
             self.bluButtonPub(self.blu_led_state)
 
