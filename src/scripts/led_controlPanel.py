@@ -23,15 +23,15 @@ class led_controller:
         self.gre_led_state = False
         self.blu_led_state = False
     
-        def yel_but_CB(self, state):
+        def yel_but_CB(state):
             self.yel_led_state = state.data
             GPIO.output(self.yel_led_pin, self.yel_led_state)
 
-        def gre_but_CB(self, state):
+        def gre_but_CB(state):
             self.gre_led_state = state.data
             GPIO.output(self.gre_led_pin, self.gre_led_state)
 
-        def blu_but_CB(self, state):
+        def blu_but_CB(state):
             self.blu_led_state = state.data
             GPIO.output(self.blu_led_pin, self.blu_led_state)
 
@@ -45,19 +45,6 @@ class led_controller:
         GPIO.setup(self.yel_led_pin, GPIO.OUT)
         GPIO.setup(self.gre_led_pin, GPIO.OUT)
         GPIO.setup(self.blu_led_pin, GPIO.OUT)
-    
-        def yel_but_CB(state):
-            self.yel_led_state = state.data
-            GPIO.output(self.yel_led_pin, self.yel_led_state)
-
-        def gre_but_CB(state):
-            self.gre_led_state = state.data
-            GPIO.output(self.gre_led_pin, self.gre_led_state)
-
-        def blu_but_CB(state):
-            self.blu_led_state = state.data
-            GPIO.output(self.blu_led_pin, self.blu_led_state)
-
 
 def main():
     rospy.init_node('led_control_panel_node')
