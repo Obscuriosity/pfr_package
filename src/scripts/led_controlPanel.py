@@ -22,6 +22,18 @@ class led_controller:
         self.yel_led_state = False
         self.gre_led_state = False
         self.blu_led_state = False
+    
+        def yel_but_CB(self, state):
+            self.yel_led_state = state.data
+            GPIO.output(self.yel_led_pin, self.yel_led_state)
+
+        def gre_but_CB(self, state):
+            self.gre_led_state = state.data
+            GPIO.output(self.gre_led_pin, self.gre_led_state)
+
+        def blu_but_CB(self, state):
+            self.blu_led_state = state.data
+            GPIO.output(self.blu_led_pin, self.blu_led_state)
 
         # Subscribers
         self.yel_but_sub = rospy.Subscriber('yelButtonState', Bool, yel_but_CB)
@@ -47,12 +59,9 @@ class led_controller:
             GPIO.output(self.blu_led_pin, self.blu_led_state)
 
 
-
-
-
 def main():
     rospy.init_node('led_control_panel_node')
-    rospy.loginfo("LED control panel node started")
+    rospy.loginfo("LED started")
     led = led_controller()
     rospy.spin()
 
