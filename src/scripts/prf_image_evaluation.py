@@ -64,7 +64,7 @@ class image_handler:
                 self.centrex = int(xmin + (xmax - xmin)/2)
                 self.centrey = int(ymin + (ymax - ymin)/2)
                 #rospy.loginfo("Person centre = " + str(self.centrex) + ", " + str(self.centrey))
-        self.show_image(person) # for debugging
+        # self.show_image(person) # for debugging
         self.turn(person)
         person = False
     
