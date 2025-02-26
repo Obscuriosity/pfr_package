@@ -48,6 +48,6 @@
     </node>
 
     <!-- Start Base Controller launch file -->
-    <include file="/base_control.launch" />
+    <include file="$(find pfr_package)/launch/base_control.launch" />
     
 </launch>
