@@ -4,7 +4,7 @@
     <arg name="view" default="false" />
 
     <!-- Launch person following robot image analysis node-->
-    <node name="image_analyzer" pkg="pfr_package" type="prf_image_evaluation.py" />
+    <node name="image_analyzer" pkg="pfr_package" type="prf_image_evaluation.py" output="screen" />
 
     <!-- Launch the USB camera -->
     <node name="usb_cam" pkg="usb_cam" type="usb_cam_node" output="screen">
