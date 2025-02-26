@@ -1,7 +1,7 @@
 <launch>
 
-    <!-- Do we want an output? if not add view:=false to launch command-->
-    <arg name="view" default="true" />
+    <!-- Do we want an output? if so, add view:=true to launch command-->
+    <arg name="view" default="false" />
     <!-- Launch the USB camera -->
     <node name="usb_cam" pkg="usb_cam" type="usb_cam_node" output="screen">
         <param name="video_device" value="/dev/video0" />
