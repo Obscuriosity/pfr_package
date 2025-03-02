@@ -24,10 +24,10 @@ long lpwm, rpwm;
 int motorPWM[2];
 int forPins[2] = { 16, 18 };  // 16 right forward, 18 left forward
 int bacPins[2] = { 17, 19 };  // 17 right backward, 19 right backward
-int l_enc_int = 21;  // left encoder interrupt pin
-int l_enc_dig = 22;  // left encoder digital pin
-int r_enc_int = 25;  // right encoder interrupt pin
-int r_enc_dig = 26;  // right encoder digital pin
+int l_enc_int = 34;  // left encoder interrupt pin
+int l_enc_dig = 35;  // left encoder digital pin
+int r_enc_int = 36;  // right encoder interrupt pin
+int r_enc_dig = 39;  // right encoder digital pin
 
 unsigned long previousMillis;
 int interval;
