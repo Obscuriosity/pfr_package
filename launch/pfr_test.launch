@@ -47,6 +47,18 @@
       <remap from="camera/rgb/image_raw"  to="$(arg image)" />
     </node>
 
+    <!-- Start a PID controller to manage the robot rotation-->
+    <remap from="user_state" to="/user_rotation/state"/>
+    <remap from="user_effort" to="/user_rotation/control_effort"/>
+    <remap from="centre_error" to="/user_rotation/error"/>
+    <remap from="upid_enable" to="/user_rotation/pid_enable"/>
+    
+    <node name="user_rotation_pid" pkg="pid" type="controller" ns="user_rotation">
+          <param name="Kp" value="0.4" />
+          <param name="Ki" value="0.14" />
+          <param name="Kd" value="0.0" />
+    </node>
+
     <!-- Start Base Controller launch file -->
     <include file="$(find pfr_package)/launch/base_control.launch" />
     

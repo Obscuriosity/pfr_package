@@ -9,6 +9,7 @@ import rospy # ROS Python Support
 import cv2
 import numpy as np
 from cv_bridge import CvBridge, CvBridgeError
+from std_msgs.msg import Float64
 from sensor_msgs.msg import Image
 from darknet_ros_msgs.msg import BoundingBoxes, BoundingBox
 
@@ -30,8 +31,11 @@ class image_handler:
         self.sub_darknet_image = rospy.Subscriber('/usb_cam/image_raw', Image, self.image_callback)
         self.sub_bounding_boxes = rospy.Subscriber('/darknet_ros/bounding_boxes', BoundingBoxes, self.bbs_callback)
         # - PID feedback subscriber, receiving cmd_vel
+        +36
+
         # create publishers
-        # - publish deflection to pid controller and get cmd_vel
+        # - publish deflection to pid controller and get cmd_vel rotation
+        self._centreError = rospy.Publisher('centreError', Float64, queue_size=10)
         # - publish 'cmd_vel' Twist message for base controller to respond to, with PID controller.
 
     # subscription callbacks go here:
@@ -79,6 +83,7 @@ class image_handler:
                 rospy.loginfo("Turn Left " + str(int(self.deflection)))  # or minimum turn will be 51 or (self.forward + 1)
             else:
                 rospy.loginfo("Don't Turn ")
+            self._centreError.publish(self.deflection)
     
     def drive(self):    # will publish forward velocity via PID controller
         rospy.loginfo("Nothing yet")
@@ -97,7 +102,7 @@ class image_handler:
                 cv2.circle(self.cv_image, (self.centrex, self.centrey), radius, (255, 255, 255), 5)
         try:
             
-            cv2.imshow("Person Following Robot view", self.cv_image)
+            # cv2.imshow("Person Following Robot view", self.cv_image)
             cv2.waitKey(100)
         except:
             rospy.logwarn("Show Image failed")
