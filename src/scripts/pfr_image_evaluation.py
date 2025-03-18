@@ -83,6 +83,7 @@ class image_handler:
                 rospy.loginfo("Turn Left " + str(int(self.deflection)))  # or minimum turn will be 51 or (self.forward + 1)
             else:
                 rospy.loginfo("Don't Turn ")
+                self.deflection = 0.0
             self._centreError.publish(self.deflection)
     
     def drive(self):    # will publish forward velocity via PID controller
@@ -102,7 +103,7 @@ class image_handler:
                 cv2.circle(self.cv_image, (self.centrex, self.centrey), radius, (255, 255, 255), 5)
         try:
             
-            # cv2.imshow("Person Following Robot view", self.cv_image)
+            # cv2.imshow("Person Following Robot view", self.cv_image) # Again useful for debugging
             cv2.waitKey(100)
         except:
             rospy.logwarn("Show Image failed")
