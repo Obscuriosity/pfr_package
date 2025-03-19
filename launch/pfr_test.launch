@@ -51,11 +51,10 @@
     <remap from="rotation_state" to="/user_rotation/state"/>
     <remap from="rotation_setpoint" to="/user_rotation/setpoint"/>
     <remap from="user_effort" to="/user_rotation/control_effort"/>
-    <remap from="upid_enable" to="/user_rotation/pid_enable"/>
     
     <node name="user_rotation_pid" pkg="pid" type="controller" ns="user_rotation">
-          <param name="Kp" value="0.4" />
-          <param name="Ki" value="0.14" />
+          <param name="Kp" value="0.001" />
+          <param name="Ki" value="0.0001" />
           <param name="Kd" value="0.0" />
     </node>
 

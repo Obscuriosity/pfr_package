@@ -30,11 +30,8 @@ class image_handler:
         # Create subscribers
         self.sub_darknet_image = rospy.Subscriber('/usb_cam/image_raw', Image, self.image_callback)
         self.sub_bounding_boxes = rospy.Subscriber('/darknet_ros/bounding_boxes', BoundingBoxes, self.bbs_callback)
-        # - PID feedback subscriber, receiving cmd_vel
-        +36
-
         # create publishers
-        # - publish centre(setpoint) and state to pid controller which will return a value which we will publish as cmd_vel.rotation
+        # - publish centre(setpoint) and state to pid controller, that will return a value which will be used by motion_controller
         self._rotation_setpoint = rospy.Publisher('rotation_setpoint', Float64, queue_size=10)
         self._rotation_state = rospy.Publisher('rotation_state', Float64, queue_size=10)
         # - publish 'cmd_vel' Twist message for base controller to respond to, with PID controller.
