@@ -8,6 +8,7 @@
 
 import rospy
 from std_msgs.msg import Float64
+from std_msgs.msg import Bool
 from geometry_msgs.msg import Twist
 
 class motionController:
@@ -21,6 +22,7 @@ class motionController:
         # Subscribers here:
         self.velocity_cmd_vel_Sub = rospy.Subscriber('user_velocity/control_effort', Float64, self.velocity_cmd_vel_CB)
         self.rotation_cmd_vel_Sub = rospy.Subscriber('user_rotation/control_effort', Float64, self.rotation_cmd_vel_CB)
+        self.stop_button_sub = rospy.Subscriber('redButtonState', Bool, self.stop_button_CB)
         # Publisher here:
         self.combined_cmd_vel_Pub = rospy.Publisher('cmd_vel', Twist, queue_size=1)
 
@@ -34,6 +36,12 @@ class motionController:
         self.spin = msg.data
         rospy.loginfo("Motion controller: Rotation Received = %s", self.spin)
         self.update_cmd_vel()
+    
+    def stop_button_CB(self, msg):
+        rospy.loginfo("Motion Controller: STOP MOTORS!")
+        self.speed = 0.0
+        self.spin = 0.0
+        self.update_cmd_vel
     
     # Other methods here:
     def update_cmd_vel(self):

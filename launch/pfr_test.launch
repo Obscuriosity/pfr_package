@@ -63,5 +63,8 @@
 
     <!-- Start Motion Controller-->
     <node name="motion_controller" pkg="pfr_package" type="motion_controller.py" output="screen" />
+
+    <!-- Start Button state publisher-->
+    <node name="button_publisher" pkg="pfr_package" type="button_state_pub.py" output="log" />
     
 </launch>
