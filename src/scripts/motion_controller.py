@@ -39,7 +39,7 @@ class motionController:
     def update_cmd_vel(self):
         self.command_velocity.linear.x = self.speed
         self.command_velocity.angular.z = self.spin
-        self.combined_cmd_vel_Pub.Publish(self.command_velocity)
+        self.combined_cmd_vel_Pub.publish(self.command_velocity)
 
 
 def main():
