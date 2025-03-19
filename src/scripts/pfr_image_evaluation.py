@@ -34,8 +34,9 @@ class image_handler:
         +36
 
         # create publishers
-        # - publish deflection to pid controller and get cmd_vel rotation
-        self._centreError = rospy.Publisher('centreError', Float64, queue_size=10)
+        # - publish centre(setpoint) and state to pid controller which will return a value which we will publish as cmd_vel.rotation
+        self._rotation_setpoint = rospy.Publisher('rotation_setpoint', Float64, queue_size=10)
+        self._rotation_state = rospy.Publisher('rotation_state', Float64, queue_size=10)
         # - publish 'cmd_vel' Twist message for base controller to respond to, with PID controller.
 
     # subscription callbacks go here:
@@ -69,25 +70,28 @@ class image_handler:
                 self.centrey = int(ymin + (ymax - ymin)/2)
                 #rospy.loginfo("Person centre = " + str(self.centrex) + ", " + str(self.centrey))
         # self.show_image(person) # for debugging
-        self.turn(person)
+        self.drive(person)
         person = False
     
     # other methods go here:
-
-    def turn(self, pobl):   # will publish rotational velocity via PID controller
+    
+    def drive(self, pobl):    # Method to manage movement based on camera images, will publish CMD_VEL via PID controller
         if pobl:
             self.deflection = self.imgW/2 - self.centrex
             if self.deflection < 0 and self.deflection < -self.forward: 
-                rospy.loginfo("Turn Right " + str(int(self.deflection))) # may need to be str(int(deflection + self.forward))
+                rospy.loginfo("Turn Right " + str(int(self.deflection))) #
             elif self.deflection > 0 and self.deflection > self.forward:
-                rospy.loginfo("Turn Left " + str(int(self.deflection)))  # or minimum turn will be 51 or (self.forward + 1)
+                rospy.loginfo("Turn Left " + str(int(self.deflection)))  #
             else:
                 rospy.loginfo("Don't Turn ")
                 self.deflection = 0.0
-            self._centreError.publish(self.deflection)
-    
-    def drive(self):    # will publish forward velocity via PID controller
-        rospy.loginfo("Nothing yet")
+        else: # if there are no people in view
+            self.deflection = 0.0
+            self.speed = 0.0   
+        # PID node runs every time a state is published 
+        self._rotation_setpoint.publish(0.0)
+        self._rotation_state.publish(self.deflection)
+        
 
     def show_image(self, pobl):
         #rospy.loginfo("Showing Image")
@@ -103,7 +107,7 @@ class image_handler:
                 cv2.circle(self.cv_image, (self.centrex, self.centrey), radius, (255, 255, 255), 5)
         try:
             
-            # cv2.imshow("Person Following Robot view", self.cv_image) # Again useful for debugging
+            cv2.imshow("Person Following Robot view", self.cv_image) # Again useful for debugging
             cv2.waitKey(100)
         except:
             rospy.logwarn("Show Image failed")
