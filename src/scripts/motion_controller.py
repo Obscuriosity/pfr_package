@@ -26,12 +26,12 @@ class motionController:
 
     # Call Backs Here:
     def velocity_cmd_vel_CB(self, msg):
-        rospy.loginfo("Velocity Received")
+        rospy.loginfo("Motion Controller: Velocity Received")
         self.speed = msg.data
         self.update_cmd_vel()
 
     def rotation_cmd_vel_CB(self, msg):
-        rospy.loginfo("Rotation Received")
+        rospy.loginfo("Motion controller: Rotation Received")
         self.spin = msg.data
         self.update_cmd_vel()
     

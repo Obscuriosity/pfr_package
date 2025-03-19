@@ -75,9 +75,9 @@ class image_handler:
     def drive(self, pobl):    # Method to manage movement based on camera images, will publish CMD_VEL via PID controller
         if pobl:
             self.deflection = self.imgW/2 - self.centrex
-            if self.deflection < 0 and self.deflection < -self.forward: 
+            if self.deflection > 0 and self.deflection > self.forward:
                 rospy.loginfo("Turn Right " + str(int(self.deflection))) #
-            elif self.deflection > 0 and self.deflection > self.forward:
+            elif self.deflection < 0 and self.deflection < -self.forward: 
                 rospy.loginfo("Turn Left " + str(int(self.deflection)))  #
             else:
                 rospy.loginfo("Don't Turn ")

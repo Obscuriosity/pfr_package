@@ -101,8 +101,8 @@ class baseController:
         #
         # Publish setpoints
         #
-        rospy.loginfo("Left  setpoint = %s", leftSetpoint)
-        rospy.loginfo("Right setpoint = %s", rightSetpoint)
+        rospy.loginfo("Base Controller: Left  setpoint = %s", leftSetpoint)
+        rospy.loginfo("Base Controller: Right setpoint = %s", rightSetpoint)
         self._lsetpointPub.publish(leftSetpoint)
         self._rsetpointPub.publish(rightSetpoint)
 
