@@ -43,7 +43,7 @@ class motionController:
 
 
 def main():
-    rospy.init_node('motion controller')
+    rospy.init_node('motion_controller')
     rospy.loginfo("Motion Controller starting")
     mc = motionController()
     rospy.spin()
