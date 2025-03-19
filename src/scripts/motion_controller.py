@@ -24,22 +24,22 @@ class motionController:
         # Publisher here:
         self.combined_cmd_vel_Pub = rospy.Publisher('cmd_vel', Twist, queue_size=1)
 
-        # Call Backs Here:
-        def velocity_cmd_vel_CB(self, msg):
-            rospy.loginfo("Velocity Received")
-            self.speed = msg.data
-            self.update_cmd_vel()
+    # Call Backs Here:
+    def velocity_cmd_vel_CB(self, msg):
+        rospy.loginfo("Velocity Received")
+        self.speed = msg.data
+        self.update_cmd_vel()
 
-        def rotation_cmd_vel_CB(self, msg):
-            rospy.loginfo("Rotation Received")
-            self.spin = msg.data
-            self.update_cmd_vel()
-        
-        # Other methods here:
-        def update_cmd_vel(self):
-            self.command_velocity.linear.x = self.speed
-            self.command_velocity.angular.z = self.spin
-            self.combined_cmd_vel_Pub.Publish(self.command_velocity)
+    def rotation_cmd_vel_CB(self, msg):
+        rospy.loginfo("Rotation Received")
+        self.spin = msg.data
+        self.update_cmd_vel()
+    
+    # Other methods here:
+    def update_cmd_vel(self):
+        self.command_velocity.linear.x = self.speed
+        self.command_velocity.angular.z = self.spin
+        self.combined_cmd_vel_Pub.Publish(self.command_velocity)
 
 
 def main():
