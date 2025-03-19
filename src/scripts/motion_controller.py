@@ -41,7 +41,7 @@ class motionController:
         rospy.loginfo("Motion Controller: STOP MOTORS!")
         self.speed = 0.0
         self.spin = 0.0
-        self.update_cmd_vel
+        self.update_cmd_vel()
     
     # Other methods here:
     def update_cmd_vel(self):
