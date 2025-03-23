@@ -120,6 +120,7 @@ class image_handler:
                 
 # Main function        
 def main():
+    r = rospy.Rate(20) # 20Hz
     ih = image_handler()
     # initialise node
     rospy.init_node('PFR_image_analysis_node', anonymous=True)
@@ -129,7 +130,7 @@ def main():
         try:
             ih.personCheck()
             ih.bbs_callback_ran = False
-            rospy.spin()
+            r.sleep()
         except KeyboardInterrupt:
             rospy.loginfo("Shutting Down...")
     cv2.destroyAllWindows()
