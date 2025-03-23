@@ -125,6 +125,7 @@ def main():
     rospy.init_node('PFR_image_analysis_node', anonymous=True)
     rospy.loginfo("Person Following Robot image analysis node started.")
     while not rospy.is_shutdown():
+        rospy.loginfo("running while loop")
         try:
             ih.personCheck()
             ih.bbs_callback_ran = False
