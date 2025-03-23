@@ -124,12 +124,13 @@ def main():
     # initialise node
     rospy.init_node('PFR_image_analysis_node', anonymous=True)
     rospy.loginfo("Person Following Robot image analysis node started.")
-    try:
-        ih.personCheck()
-        ih.bbs_callback_ran = False
-        rospy.spin()
-    except KeyboardInterrupt:
-        rospy.loginfo("Shutting Down...")
+    while not rospy.is_shutdown():
+        try:
+            ih.personCheck()
+            ih.bbs_callback_ran = False
+            rospy.spin()
+        except KeyboardInterrupt:
+            rospy.loginfo("Shutting Down...")
     cv2.destroyAllWindows()
 
 if __name__ == '__main__':
