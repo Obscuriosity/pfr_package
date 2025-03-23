@@ -120,11 +120,11 @@ class image_handler:
                 
 # Main function        
 def main():
-    r = rospy.Rate(20) # 20Hz
     ih = image_handler()
     # initialise node
     rospy.init_node('PFR_image_analysis_node', anonymous=True)
     rospy.loginfo("Person Following Robot image analysis node started.")
+    r = rospy.Rate(20) # 20Hz
     while not rospy.is_shutdown():
         rospy.loginfo("running while loop")
         try:
