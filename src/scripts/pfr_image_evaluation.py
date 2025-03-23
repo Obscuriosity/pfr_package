@@ -77,9 +77,9 @@ class image_handler:
 
     def personCheck(self):    # Method to check if people are still about?
         if (self.bbs_callback_ran == False):
-            print("BoundingBoxes has not run")
+            rospy.loginfo("BoundingBoxes has not run")
         else:
-            print("BBS Ran")
+            rospy.loginfo("BBS Ran")
     
     def drive(self, pobl):    # Method to manage movement based on camera images, will publish CMD_VEL via PID controller
         if pobl:
