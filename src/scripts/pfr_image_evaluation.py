@@ -77,9 +77,10 @@ class image_handler:
 
     def personCheck(self):    # Method to check if people are still about?
         if (self.bbs_callback_ran == False):
-            rospy.loginfo("BoundingBoxes has not run")
-        else:
-            rospy.loginfo("BBS Ran")
+            #rospy.loginfo("BoundingBoxes has not run")
+            self.drive(self.bbs_callback_ran)
+        #else:
+            #rospy.loginfo("BBS Ran")
     
     def drive(self, pobl):    # Method to manage movement based on camera images, will publish CMD_VEL via PID controller
         if pobl:
@@ -126,7 +127,6 @@ def main():
     rospy.loginfo("Person Following Robot image analysis node started.")
     r = rospy.Rate(20) # 20Hz
     while not rospy.is_shutdown():
-        rospy.loginfo("running while loop")
         try:
             ih.personCheck()
             ih.bbs_callback_ran = False
