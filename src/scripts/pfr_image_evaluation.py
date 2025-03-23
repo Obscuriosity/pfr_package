@@ -27,8 +27,10 @@ class image_handler:
         self.minTurnThreshold = 0
         self.maxTurnThreshold = 0
         self.deflection = 0
+        self.bbs_callback_ran = False
         # Create subscribers
-        self.sub_darknet_image = rospy.Subscriber('/usb_cam/image_raw', Image, self.image_callback)
+        # Image only required for debugging, comment in or out as required
+        # self.sub_darknet_image = rospy.Subscriber('/usb_cam/image_raw', Image, self.image_callback)
         self.sub_bounding_boxes = rospy.Subscriber('/darknet_ros/bounding_boxes', BoundingBoxes, self.bbs_callback)
         # create publishers
         # - publish centre(setpoint) and state to pid controller, that will return a value which will be used by motion_controller
@@ -53,6 +55,7 @@ class image_handler:
         #cv2.waitKey(100)
 
     def bbs_callback(self, boxes):
+        self.bbs_callback_ran = True
         person = False
         #rospy.loginfo("Bounding Box data, received %s objects ", (len(boxes.bounding_boxes)))
         for bb in range(len(boxes.bounding_boxes)):
@@ -68,9 +71,15 @@ class image_handler:
                 #rospy.loginfo("Person centre = " + str(self.centrex) + ", " + str(self.centrey))
         # self.show_image(person) # for debugging
         self.drive(person)
-        person = False
+        # person = False
     
     # other methods go here:
+
+    def personCheck(self):    # Method to check if people are still about?
+        if (self.bbs_callback_ran == False):
+            print("BoundingBoxes has not run")
+        else:
+            print("BBS Ran")
     
     def drive(self, pobl):    # Method to manage movement based on camera images, will publish CMD_VEL via PID controller
         if pobl:
@@ -109,19 +118,20 @@ class image_handler:
         except:
             rospy.logwarn("Show Image failed")
                 
-        
+# Main function        
 def main():
     ih = image_handler()
     # initialise node
     rospy.init_node('PFR_image_analysis_node', anonymous=True)
     rospy.loginfo("Person Following Robot image analysis node started.")
     try:
+        ih.personCheck()
+        ih.bbs_callback_ran = False
         rospy.spin()
     except KeyboardInterrupt:
         rospy.loginfo("Shutting Down...")
     cv2.destroyAllWindows()
 
-# Main function
 if __name__ == '__main__':
     main()
     
