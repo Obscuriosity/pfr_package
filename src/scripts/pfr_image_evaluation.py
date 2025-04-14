@@ -33,11 +33,11 @@ class image_handler:
         # Image only required for debugging, comment in or out as required # without this subscription the imhW, imgH are not updated.
         # self.sub_darknet_image = rospy.Subscriber('/usb_cam/image_raw', Image, self.image_callback)
         self.sub_bounding_boxes = rospy.Subscriber('/darknet_ros/bounding_boxes', BoundingBoxes, self.bbs_callback)
+        self.stop_button_sub = rospy.Subscriber('redButtonState', Bool, self.stop_button_CB)
         # create publishers
         # - publish centre(setpoint) and state to pid controller, that will return a value which will be used by motion_controller
         self._rotation_setpoint = rospy.Publisher('rotation_setpoint', Float64, queue_size=10)
         self._rotation_state = rospy.Publisher('rotation_state', Float64, queue_size=10)
-        # - publish 'cmd_vel' Twist message for base controller to respond to, with PID controller.
 
     # subscription callbacks go here:
 
@@ -74,6 +74,11 @@ class image_handler:
         self.drive(person)
         # person = False
     
+    def stop_button_CB(self, msg):
+        rospy.loginfo("Image Eval: STOP MOTORS!")
+        self._rotation_setpoint.publish(0.0)
+        self._rotation_state.publish(0.0)
+
     # other methods go here:
 
     def personCheck(self):    # Method to check if people are still about?
@@ -94,11 +99,12 @@ class image_handler:
                 rospy.loginfo("Don't Turn ")
                 self.deflection = 0.0
         else: # if there are no people in view
+            rospy.loginfo("Dim Pobl...")
             self.deflection = 0.0
             self.speed = 0.0   
         # PID node runs every time a state is published 
         self._rotation_setpoint.publish(0.0)
-        self._rotation_state.publish(self.deflection)
+        self._rotation_state.publish(-self.deflection)
         
 
     def show_image(self, pobl):
