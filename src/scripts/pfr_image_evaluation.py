@@ -18,8 +18,8 @@ class image_handler:
     def __init__(self):
         self.bridge = CvBridge()
         self.cv_image = None
-        self.imgW = 0       # cv_image width
-        self.imgH = 0       # cv_image height
+        self.imgW = 640       # cv_image width
+        self.imgH = 480       # cv_image height
         self.centrex = 0    # person centre x
         self.centrey = 0    # person centre y
         self.forward = 50   # no of pixels either side of centre where the robot
@@ -29,7 +29,8 @@ class image_handler:
         self.deflection = 0
         self.bbs_callback_ran = False
         # Create subscribers
-        # Image only required for debugging, comment in or out as required
+        # I need to get the image info to make the imgW and imgH dynamic variables.
+        # Image only required for debugging, comment in or out as required # without this subscription the imhW, imgH are not updated.
         # self.sub_darknet_image = rospy.Subscriber('/usb_cam/image_raw', Image, self.image_callback)
         self.sub_bounding_boxes = rospy.Subscriber('/darknet_ros/bounding_boxes', BoundingBoxes, self.bbs_callback)
         # create publishers
