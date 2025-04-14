@@ -23,8 +23,8 @@ class baseController:
         
         self._cmd_velSub = rospy.Subscriber('cmd_vel', Twist, self._cmd_vel_CB)
 
-        self._lsetpointPub = rospy.Publisher('lsetpoint', Float64, queue_size=10, latch=True)
-        self._rsetpointPub = rospy.Publisher('rsetpoint', Float64, queue_size=10, latch=True)
+        self._lsetpointPub = rospy.Publisher('lsetpoint', Float64, queue_size=10)
+        self._rsetpointPub = rospy.Publisher('rsetpoint', Float64, queue_size=10)
         self._lPIDenablePub = rospy.Publisher('lpid_enable', Bool, queue_size=10)
         self._rPIDenablePub = rospy.Publisher('rpid_enable', Bool, queue_size=10)
 
