@@ -45,8 +45,8 @@ class baseController:
 
         rospy.loginfo("Base Controller running")
         # Publish initial setpoints as zero
-        self._lsetpointPub.publish(0.0)
-        self._rsetpointPub.publish(0.0)
+        self._lsetpointPub.publish(0.0, latch=True)
+        self._rsetpointPub.publish(0.0, latch=True)
 
     def _cmd_vel_CB(self, msg):
         self.speed = msg.linear.x

@@ -69,7 +69,7 @@ class image_handler:
                 ymax = boxes.bounding_boxes[bb].ymax
                 self.centrex = int(xmin + (xmax - xmin)/2)
                 self.centrey = int(ymin + (ymax - ymin)/2)
-                rospy.loginfo("Person centre = " + str(self.centrex) + ", " + str(self.imgW/2)) #+ str(self.centrey))
+                # rospy.loginfo("Person centre = " + str(self.centrex) + ", " + str(self.imgW/2)) #+ str(self.centrey))
         # self.show_image(person) # for debugging
         self.drive(person)
         # person = False
