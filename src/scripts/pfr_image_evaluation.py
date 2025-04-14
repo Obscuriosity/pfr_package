@@ -22,7 +22,7 @@ class image_handler:
         self.imgH = 480       # cv_image height
         self.centrex = 0    # person centre x
         self.centrey = 0    # person centre y
-        self.forward = 50   # no of pixels either side of centre where the robot
+        self.forward = 0   # no of pixels either side of centre where the robot
                             # will not turn/ face forward
         self.minTurnThreshold = 0
         self.maxTurnThreshold = 0
