@@ -19,7 +19,8 @@ class image_handler:
     def __init__(self):
         self.bridge = CvBridge()
         self.cv_image = None
-        self.imgW = 640       # cv_image width
+        #self.imgW = 640       # cv_image width
+        self.imgW = rospy.get_param('/image_width')
         self.imgH = 480       # cv_image height
         self.centrex = 0    # person centre x
         self.centrey = 0    # person centre y
@@ -71,7 +72,7 @@ class image_handler:
                 ymax = boxes.bounding_boxes[bb].ymax
                 self.centrex = int(xmin + (xmax - xmin)/2)
                 self.centrey = int(ymin + (ymax - ymin)/2)
-                # rospy.loginfo("Person centre = " + str(self.centrex) + ", " + str(self.imgW/2)) #+ str(self.centrey))
+                rospy.loginfo("Person centre = " + str(self.centrex) + ", " + str(self.imgW/2)) #+ str(self.centrey))
         # self.show_image(person) # for debugging
         self.drive(person)
         # person = False
@@ -105,11 +106,11 @@ class image_handler:
                     self.deflection = 0.0
             else: # if there are no people in view
                 rospy.loginfo("Dim Pobl...")
-                self.deflection = 0.0
-                self.speed = 0.0
-        else: # if there are no people in view
-            self.deflection = 0.0
-            self.speed = 0.0  
+                #self.deflection = 0.0
+                #self.speed = 0.0
+        else: # if stop == True
+            self.deflection = self.deflection/2
+            self.speed = self.speed/2
         # PID node runs every time a state is published 
         self._rotation_setpoint.publish(0.0)
         self._rotation_state.publish(-self.deflection)
