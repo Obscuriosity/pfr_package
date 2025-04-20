@@ -18,6 +18,7 @@ class motionController:
         self.speed = 0.0
         self.spin = 0.0
         self.command_velocity = Twist()
+        self.stop = False
 
         # Subscribers here:
         self.velocity_cmd_vel_Sub = rospy.Subscriber('user_velocity/control_effort', Float64, self.velocity_cmd_vel_CB)
@@ -38,16 +39,22 @@ class motionController:
         self.update_cmd_vel()
     
     def stop_button_CB(self, msg):
-        rospy.loginfo("Motion Controller: STOP MOTORS!")
-        self.speed = 0.0
-        self.spin = 0.0
-        self.update_cmd_vel()
-    
-    # Other methods here:
+        self.stop = not self.stop
+        if self.stop:
+            rospy.loginfo("Motion Controller: STOP MOTORS!")
+        else:
+            rospy.loginfo("Motion Controller: START MOTORS!")
+
     def update_cmd_vel(self):
-        self.command_velocity.linear.x = self.speed
-        self.command_velocity.angular.z = self.spin
-        self.combined_cmd_vel_Pub.publish(self.command_velocity)
+        if self.stop:
+            rospy.loginfo("Motion Controller: Stopped")
+            self.command_velocity.linear.x = 0.0
+            self.command_velocity.angular.z = 0.0
+            self.combined_cmd_vel_Pub.publish(self.command_velocity)
+        else:
+            self.command_velocity.linear.x = self.speed
+            self.command_velocity.angular.z = self.spin
+            self.combined_cmd_vel_Pub.publish(self.command_velocity)
 
 
 def main():
