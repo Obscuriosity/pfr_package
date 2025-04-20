@@ -29,6 +29,7 @@ class image_handler:
         self.minTurnThreshold = 0
         self.maxTurnThreshold = 0
         self.deflection = 0
+        self.speed  = 0
         self.bbs_callback_ran = False
         self.stop = False
         # Create subscribers
