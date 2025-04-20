@@ -20,7 +20,7 @@ class image_handler:
         self.bridge = CvBridge()
         self.cv_image = None
         #self.imgW = 640       # cv_image width
-        self.imgW = rospy.get_param('/image_width')
+        self.imgW = rospy.get_param('/usb_cam/image_width')
         self.imgH = 480       # cv_image height
         self.centrex = 0    # person centre x
         self.centrey = 0    # person centre y
