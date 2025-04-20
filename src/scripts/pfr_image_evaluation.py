@@ -31,13 +31,11 @@ class image_handler:
         self.deflection = 0
         self.speed  = 0
         self.bbs_callback_ran = False
-        self.stop = False
         # Create subscribers
         # I need to get the image info to make the imgW and imgH dynamic variables.
         # Image only required for debugging, comment in or out as required # without this subscription the imhW, imgH are not updated.
         # self.sub_darknet_image = rospy.Subscriber('/usb_cam/image_raw', Image, self.image_callback)
         self.sub_bounding_boxes = rospy.Subscriber('/darknet_ros/bounding_boxes', BoundingBoxes, self.bbs_callback)
-        self.stop_button_sub = rospy.Subscriber('redButtonState', Bool, self.stop_button_CB)
         # create publishers
         # - publish centre(setpoint) and state to pid controller, that will return a value which will be used by motion_controller
         self._rotation_setpoint = rospy.Publisher('rotation_setpoint', Float64, queue_size=10)
@@ -77,13 +75,7 @@ class image_handler:
         # self.show_image(person) # for debugging
         self.drive(person)
         # person = False
-    
-    def stop_button_CB(self, msg):
-        self.stop = not self.stop
-        if self.stop:
-            rospy.loginfo("Image Eval: STOP MOTORS!")
-        else:
-            rospy.loginfo("Image Eval: START MOTORS!")
+
 
     # other methods go here:
 
@@ -95,23 +87,19 @@ class image_handler:
             #rospy.loginfo("BBS Ran")
     
     def drive(self, pobl):    # Method to manage movement based on camera images, publish state and set point to become CMD_VEL via PID controller
-        if (self.stop == False):
-            if pobl:
-                self.deflection = self.imgW/2 - self.centrex
-                if self.deflection < 0 and self.deflection < -self.forward:
-                    rospy.loginfo("Turn Right " + str(int(self.deflection))) #
-                elif self.deflection > 0 and self.deflection > self.forward: 
-                    rospy.loginfo("Turn Left " + str(int(self.deflection)))  #
-                else:
-                    rospy.loginfo("Don't Turn ")
-                    self.deflection = 0.0
-            else: # if there are no people in view
-                rospy.loginfo("Dim Pobl...")
-                #self.deflection = 0.0
-                #self.speed = 0.0
-        else: # if stop == True
-            self.deflection = self.deflection/2
-            self.speed = self.speed/2
+        if pobl:
+            self.deflection = self.imgW/2 - self.centrex
+            if self.deflection < 0 and self.deflection < -self.forward:
+                rospy.loginfo("Turn Right " + str(int(self.deflection))) #
+            elif self.deflection > 0 and self.deflection > self.forward: 
+                rospy.loginfo("Turn Left " + str(int(self.deflection)))  #
+            else:
+                rospy.loginfo("Don't Turn ")
+                self.deflection = 0.0
+        else: # if there are no people in view
+            rospy.loginfo("Dim Pobl...")
+            #self.deflection = 0.0
+            #self.speed = 0.0
         # PID node runs every time a state is published 
         self._rotation_setpoint.publish(0.0)
         self._rotation_state.publish(-self.deflection)
