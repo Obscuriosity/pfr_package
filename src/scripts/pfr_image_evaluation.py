@@ -39,8 +39,8 @@ class image_handler:
         self.sub_bounding_boxes = rospy.Subscriber('/darknet_ros/bounding_boxes', BoundingBoxes, self.bbs_callback)
         # create publishers
         # - publish centre(setpoint) and state to pid controller, that will return a value which will be used by motion_controller
-        self._rotation_setpoint = rospy.Publisher('rotation_setpoint', Float64, queue_size=10)
-        self._rotation_state = rospy.Publisher('rotation_state', Float64, queue_size=10)
+        self._rotation_setpoint = rospy.Publisher('rotation_setpoint', Float64, queue_size=1)
+        self._rotation_state = rospy.Publisher('rotation_state', Float64, queue_size=1)
 
     # subscription callbacks go here:
 

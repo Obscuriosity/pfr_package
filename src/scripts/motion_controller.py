@@ -21,19 +21,19 @@ class motionController:
         self.stop = False
 
         # Subscribers here:
-        self.velocity_cmd_vel_Sub = rospy.Subscriber('user_velocity/control_effort', Float64, self.velocity_cmd_vel_CB)
-        self.rotation_cmd_vel_Sub = rospy.Subscriber('user_rotation/control_effort', Float64, self.rotation_cmd_vel_CB)
+        self.velocity_con_eff_Sub = rospy.Subscriber('user_velocity/control_effort', Float64, self.velocity_con_eff_CB)
+        self.rotation_con_eff_Sub = rospy.Subscriber('user_rotation/control_effort', Float64, self.rotation_con_eff_CB)
         self.stop_button_sub = rospy.Subscriber('redButtonState', Bool, self.stop_button_CB)
         # Publisher here:
         self.combined_cmd_vel_Pub = rospy.Publisher('cmd_vel', Twist, queue_size=1)
 
     # Call Backs Here:
-    def velocity_cmd_vel_CB(self, msg):
+    def velocity_con_eff_CB(self, msg):
         self.speed = msg.data
         rospy.loginfo("Motion Controller: Velocity Received = %s", self.speed)
         self.update_cmd_vel()
 
-    def rotation_cmd_vel_CB(self, msg):
+    def rotation_con_eff_CB(self, msg):
         self.spin = msg.data
         rospy.loginfo("Motion controller: Rotation Received = %s", self.spin)
         self.update_cmd_vel()
