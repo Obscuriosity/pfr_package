@@ -133,7 +133,7 @@ def main():
     r = rospy.Rate(20) # 20Hz
     while not rospy.is_shutdown():
         try:
-            ih.personCheck()
+            #ih.personCheck()
             ih.bbs_callback_ran = False
             r.sleep()
         except KeyboardInterrupt:
