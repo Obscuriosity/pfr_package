@@ -19,9 +19,10 @@ class image_handler:
     def __init__(self):
         self.bridge = CvBridge()
         self.cv_image = None
-        #self.imgW = 640       # cv_image width
+        # self.imgW = 640       # cv_image width
+        # self.imgH = 480       # cv_image height
         self.imgW = rospy.get_param('/usb_cam/image_width')
-        self.imgH = 480       # cv_image height
+        self.imgH = rospy.get_param('/usb_cam/image_height')
         self.centrex = 0    # person centre x
         self.centrey = 0    # person centre y
         self.forward = 10   # no of pixels either side of centre where the robot
@@ -72,8 +73,9 @@ class image_handler:
                 self.centrex = int(xmin + (xmax - xmin)/2)
                 self.centrey = int(ymin + (ymax - ymin)/2)
                 rospy.loginfo("Person centre = " + str(self.centrex) + ", " + str(self.imgW/2)) #+ str(self.centrey))
+                self.drive(person) # only call drive method if there are people.
         # self.show_image(person) # for debugging
-        self.drive(person)
+        
         # person = False
 
 
