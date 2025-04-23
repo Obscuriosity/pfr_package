@@ -98,8 +98,8 @@ class image_handler:
                 self.deflection = 0.0
         else: # if there are no people in view
             rospy.loginfo("Dim Pobl...")
-            #self.deflection = 0.0
-            #self.speed = 0.0
+            self.deflection = 0.0
+            self.speed = 0.0
         # PID node runs every time a state is published 
         self._rotation_setpoint.publish(0.0)
         self._rotation_state.publish(-self.deflection)
