@@ -43,6 +43,7 @@ class image_handler:
         # - publish centre(setpoint) and state to pid controller, that will return a value which will be used by motion_controller
         self._rotation_setpoint = rospy.Publisher('rotation_setpoint', Float64, queue_size=1)
         self._rotation_state = rospy.Publisher('rotation_state', Float64, queue_size=1)
+        self._rotation_pid_enable = rospy.Publisher('pid_enable', Bool, queue_size=10)
 
     # subscription callbacks go here:
 
@@ -83,9 +84,12 @@ class image_handler:
         self.follow = not self.follow
         if self.follow:
             rospy.loginfo("Robot Following....")
+            self._rotation_pid_enable.publish(True)
+
         else:
             rospy.loginfo("Robot STOPPED Following....")
             self._rotation_state.publish(0.0)
+            self._rotation_pid_enable.publish(False)
 
     # other methods go here:
 
