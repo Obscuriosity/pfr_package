@@ -50,9 +50,9 @@
     <remap from="user_effort" to="/user_rotation/control_effort"/>
     
     <node name="user_rotation_pid" pkg="pid" type="controller" ns="user_rotation">
-          <param name="Kp" value="0.0009" />
-          <param name="Ki" value="0.000075" />
-          <param name="Kd" value="0.0005" />
+          <param name="Kp" value="0.01" />
+          <param name="Ki" value="0.0" />
+          <param name="Kd" value="0.05" />
     </node>
 
     <!-- Launch person following robot image analysis node-->
