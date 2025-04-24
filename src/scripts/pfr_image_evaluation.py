@@ -43,7 +43,7 @@ class image_handler:
         # - publish centre(setpoint) and state to pid controller, that will return a value which will be used by motion_controller
         self._rotation_setpoint = rospy.Publisher('rotation_setpoint', Float64, queue_size=1)
         self._rotation_state = rospy.Publisher('rotation_state', Float64, queue_size=1)
-        self._rotation_pid_enable = rospy.Publisher('pid_enable', Bool, queue_size=10)
+        self._rotation_pid_enable = rospy.Publisher('rpid_enable', Bool, queue_size=10)
 
     # subscription callbacks go here:
 
