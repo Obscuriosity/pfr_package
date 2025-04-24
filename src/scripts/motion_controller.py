@@ -41,11 +41,11 @@ class motionController:
     def stop_button_CB(self, msg):
         self.stop = not self.stop
         if self.stop:
-            rospy.loginfo("Motion Controller: STOP MOTORS!")
+            rospy.logwarn("Motion Controller: STOP MOTORS!")
             self.command_velocity.linear.x = 0.0
             self.command_velocity.angular.z = 0.0
         else:
-            rospy.loginfo("Motion Controller: START MOTORS!")
+            rospy.logwarn("Motion Controller: START MOTORS!")
         self.update_cmd_vel()
 
     def update_cmd_vel(self):
