@@ -48,7 +48,7 @@ class led_controller:
 
 def main():
     rospy.init_node('led_control_panel_node')
-    rospy.loginfo("LED started")
+    rospy.loginfo("LED panel started")
     led = led_controller()
     rospy.spin()
 

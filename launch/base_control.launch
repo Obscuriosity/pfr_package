@@ -46,4 +46,20 @@
           <param name="Ki" value="0.14" />
           <param name="Kd" value="0.0" />
     </node>
+
+    <!-- Start Button state publisher-->
+        <node 
+            name="button_publisher" 
+            pkg="pfr_package" 
+            type="button_state_pub.py" 
+            output="log" 
+        />
+    
+    <!-- Start LED panel-->
+        <node
+            name="LED panel"
+            pkg="pfr_package"
+            type="led_controlPanel.py"
+        />
+
 </launch>
