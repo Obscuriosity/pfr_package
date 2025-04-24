@@ -32,11 +32,13 @@ class image_handler:
         self.deflection = 0
         self.speed  = 0
         self.bbs_callback_ran = False
+        self.follow = False
         # Create subscribers
         # I need to get the image info to make the imgW and imgH dynamic variables.
         # Image only required for debugging, comment in or out as required # without this subscription the imhW, imgH are not updated.
         # self.sub_darknet_image = rospy.Subscriber('/usb_cam/image_raw', Image, self.image_callback)
         self.sub_bounding_boxes = rospy.Subscriber('/darknet_ros/bounding_boxes', BoundingBoxes, self.bbs_callback)
+        self.follow_button_sub = rospy.Subscriber('greButtonState', Bool, self.follow_button_CB)
         # create publishers
         # - publish centre(setpoint) and state to pid controller, that will return a value which will be used by motion_controller
         self._rotation_setpoint = rospy.Publisher('rotation_setpoint', Float64, queue_size=1)
@@ -59,25 +61,26 @@ class image_handler:
         #cv2.waitKey(100)
 
     def bbs_callback(self, boxes):
-        self.bbs_callback_ran = True
-        person = False
-        #rospy.loginfo("Bounding Box data, received %s objects ", (len(boxes.bounding_boxes)))
-        for bb in range(len(boxes.bounding_boxes)):
-            if boxes.bounding_boxes[bb].Class == 'person':
-                person = True
-                #rospy.loginfo(boxes.bounding_boxes[bb].Class + " detected!")
-                xmin = boxes.bounding_boxes[bb].xmin
-                xmax = boxes.bounding_boxes[bb].xmax
-                ymin = boxes.bounding_boxes[bb].ymin
-                ymax = boxes.bounding_boxes[bb].ymax
-                self.centrex = int(xmin + (xmax - xmin)/2)
-                self.centrey = int(ymin + (ymax - ymin)/2)
-                rospy.loginfo("Person centre = " + str(self.centrex) + ", " + str(self.imgW/2)) #+ str(self.centrey))
-                self.drive(person) # only call drive method if there are people.
-        # self.show_image(person) # for debugging
+        if self.follow:
+            self.bbs_callback_ran = True
+            person = False
+            #rospy.loginfo("Bounding Box data, received %s objects ", (len(boxes.bounding_boxes)))
+            for bb in range(len(boxes.bounding_boxes)):
+                if boxes.bounding_boxes[bb].Class == 'person':
+                    person = True
+                    #rospy.loginfo(boxes.bounding_boxes[bb].Class + " detected!")
+                    xmin = boxes.bounding_boxes[bb].xmin
+                    xmax = boxes.bounding_boxes[bb].xmax
+                    ymin = boxes.bounding_boxes[bb].ymin
+                    ymax = boxes.bounding_boxes[bb].ymax
+                    self.centrex = int(xmin + (xmax - xmin)/2)
+                    self.centrey = int(ymin + (ymax - ymin)/2)
+                    rospy.loginfo("Person centre = " + str(self.centrex) + ", " + str(self.imgW/2)) #+ str(self.centrey))
+                    self.drive(person) # only call drive method if there are people.
+            # self.show_image(person) # for debugging
         
-        # person = False
-
+    def follow_button_CB(self, msg):
+        self.follow = not self.follow
 
     # other methods go here:
 
