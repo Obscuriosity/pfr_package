@@ -44,6 +44,8 @@ class motionController:
             rospy.logwarn("Motion Controller: STOP MOTORS!")
             self.speed = 0.0
             self.spin = 0.0
+            self.command_velocity.linear.x = self.speed
+            self.command_velocity.angular.z = self.spin
         else:
             rospy.logwarn("Motion Controller: START MOTORS!")
         self.update_cmd_vel()
