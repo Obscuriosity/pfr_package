@@ -42,8 +42,8 @@ class motionController:
         self.stop = not self.stop
         if self.stop:
             rospy.logwarn("Motion Controller: STOP MOTORS!")
-            self.command_velocity.linear.x = 0.0
-            self.command_velocity.angular.z = 0.0
+            self.speed = 0.0
+            self.spin = 0.0
         else:
             rospy.logwarn("Motion Controller: START MOTORS!")
         self.update_cmd_vel()
