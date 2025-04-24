@@ -57,7 +57,7 @@
     
     <!-- Start LED panel-->
         <node
-            name="LED panel"
+            name="led_panel"
             pkg="pfr_package"
             type="led_controlPanel.py"
         />
