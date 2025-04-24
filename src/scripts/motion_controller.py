@@ -42,10 +42,7 @@ class motionController:
         self.stop = not self.stop
         if self.stop:
             rospy.logwarn("Motion Controller: STOP MOTORS!")
-            self.speed = 0.0
-            self.spin = 0.0
-            self.command_velocity.linear.x = self.speed
-            self.command_velocity.angular.z = self.spin
+            self.reset_cmd_vel()
         else:
             rospy.logwarn("Motion Controller: START MOTORS!")
         self.update_cmd_vel()
@@ -53,10 +50,17 @@ class motionController:
     def update_cmd_vel(self):
         if self.stop:
             rospy.loginfo("Motion Controller: Stopped")
+            self.reset_cmd_vel()
         else:
             self.command_velocity.linear.x = self.speed
             self.command_velocity.angular.z = self.spin
         self.combined_cmd_vel_Pub.publish(self.command_velocity)
+    
+    def reset_cmd_vel(self):
+        self.speed = 0.0
+        self.spin = 0.0
+        self.command_velocity.linear.x = self.speed
+        self.command_velocity.angular.z = self.spin
 
 
 def main():
