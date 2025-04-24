@@ -81,6 +81,11 @@ class image_handler:
         
     def follow_button_CB(self, msg):
         self.follow = not self.follow
+        if self.follow:
+            rospy.loginfo("Robot Following....")
+        else:
+            rospy.loginfo("Robot STOPPED Following....")
+            self._rotation_state.publish(0.0)
 
     # other methods go here:
 
