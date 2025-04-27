@@ -31,7 +31,7 @@
 
     <!-- ROS and network parameter files -->
     <arg name="ros_param_file"             default="$(find darknet_ros)/config/ros.yaml"/>
-    <arg name="network_param_file"         default="$(find darknet_ros)/config/yolov3.yaml"/>
+    <arg name="network_param_file"         default="$(find darknet_ros)/config/yolov2-tiny.yaml"/>
 
     <!-- Load parameters -->
     <rosparam command="load" ns="darknet_ros" file="$(arg ros_param_file)"/>
@@ -51,9 +51,9 @@
     <remap from="rpid_enable" to="/user_rotation/pid_enable"/>
     
     <node name="user_rotation_pid" pkg="pid" type="controller" ns="user_rotation">
-          <param name="Kp" value="0.0011" />
+          <param name="Kp" value="0.001" />
           <param name="Ki" value="0.0" />
-          <param name="Kd" value="0.000" />
+          <param name="Kd" value="0.0005" />
     </node>
 
     <!-- Launch person following robot image analysis node-->
