@@ -34,7 +34,10 @@ class motionController:
         self.update_cmd_vel()
 
     def rotation_con_eff_CB(self, msg):
-        self.spin = msg.data
+        if msg.data > 0.02:
+            self.spin = 0.02
+        else:
+            self.spin = msg.data
         rospy.loginfo("Motion controller: Rotation Received = %s", self.spin)
         self.update_cmd_vel()
     
