@@ -2,7 +2,7 @@
 
 ''' Node to handle the darknet_ros topics and turn the information into
     physical actions, left and right initially, then back and forth, then...who knows?
-
+    
 '''
 
 import rospy # ROS Python Support
