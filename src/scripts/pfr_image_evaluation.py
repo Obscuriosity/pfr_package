@@ -25,7 +25,7 @@ class image_handler:
         self.imgH = rospy.get_param('/usb_cam/image_height')
         self.centrex = 0    # person centre x
         self.centrey = 0    # person centre y
-        self.forward = 10   # no of pixels either side of centre where the robot
+        self.forward = 25   # no of pixels either side of centre where the robot
                             # will not turn/ face forward
         self.minTurnThreshold = 0
         self.maxTurnThreshold = 0
