@@ -51,9 +51,9 @@
     <remap from="rpid_enable" to="/user_rotation/pid_enable"/>
     
     <node name="user_rotation_pid" pkg="pid" type="controller" ns="user_rotation">
-          <param name="Kp" value="0.009" />
+          <param name="Kp" value="0.01" />
           <param name="Ki" value="0.0" />
-          <param name="Kd" value="0.001" />
+          <param name="Kd" value="0.01" />
     </node>
 
     <!-- Launch person following robot image analysis node-->
