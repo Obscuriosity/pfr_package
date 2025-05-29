@@ -115,6 +115,12 @@ class image_handler:
             self.deflection = 0.0
             self.speed = 0.0
         # PID node runs every time a state is published 
+        # clipped to slow turn for object detection
+        if (self.spin > 0.02 or self.spin < -0.02):
+            if self.spin > 0:
+                self.spin = 0.02
+            if self.spin < 0:
+                self.spin = -0.02
         self._rotation_setpoint.publish(0.0)
         self._rotation_state.publish(-self.deflection)
         
